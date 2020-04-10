@@ -29,4 +29,10 @@ class TableRepositoryTest {
         assertThatThrownBy(() -> tableRepository.findTableByTableNumber(7).orElseThrow(IllegalArgumentException::new))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void gotOrder() {
+        Table table = new Table(1, Table.NOT_ORDER);
+        assertThat(table.gotOrder()).isEqualTo(new Table(1, Table.ORDERED));
+    }
 }
