@@ -18,6 +18,10 @@ public class Table {
         return new Table(number, ORDERED);
     }
 
+    public Table initial() {
+        return new Table(number, NOT_ORDER);
+    }
+
     public boolean notOrdered() {
         return status.equals(NOT_ORDER);
     }

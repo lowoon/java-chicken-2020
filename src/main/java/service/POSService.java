@@ -2,12 +2,11 @@ package service;
 
 import domain.Menu;
 import domain.MenuRepository;
-import domain.Option;
+import domain.Menus;
 import domain.Order;
+import domain.PaymentOption;
 import domain.Table;
 import domain.TableRepository;
-import view.InputView;
-import view.OutputView;
 
 public class POSService {
 
@@ -32,10 +31,20 @@ public class POSService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
     }
 
-    public void pay(int tableNumber) {
+    public double pay(int tableNumber, int paymentOption) {
         Table table = findTable(tableNumber);
         if (table.notOrdered()) {
             throw new IllegalArgumentException("주문하지 않은 테이블입니다.");
         }
+        PaymentOption option = PaymentOption.from(paymentOption);
+        double totalPrice = order.calculatePrice(option, table);
+        tableRepository.updateTableByTableNumber(tableNumber, table.initial());
+        order.initializeTable(table);
+        return totalPrice;
+    }
+
+    public Menus getMenus(int tableNumber) {
+        Table table = findTable(tableNumber);
+        return order.getMenus(table);
     }
 }
