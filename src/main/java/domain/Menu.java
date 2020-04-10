@@ -15,6 +15,18 @@ public class Menu {
         this.price = price;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean isChicken() {
+        return category == Category.CHICKEN;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o)
